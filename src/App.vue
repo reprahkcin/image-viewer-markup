@@ -28,6 +28,7 @@
 <script>
 import { ref, onMounted } from "vue"
 import Konva from "konva"
+import jonatanPie from "@/assets/slides/jonatan-pie.jpg"
 
 export default {
   name: "App",
@@ -56,7 +57,8 @@ export default {
       stage.add(layer)
 
       const imageObj = new Image()
-      imageObj.src = "@/assets/slides/jonatan-pie.jpg"
+      imageObj.src = jonatanPie
+
       imageObj.onload = function () {
         image.image(imageObj)
         layer.batchDraw()
