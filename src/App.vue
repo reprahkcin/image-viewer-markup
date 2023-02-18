@@ -9,6 +9,16 @@
           <div class="card-body">
             <div ref="displayContainer"></div>
           </div>
+          <div class="card-footer">
+            <button class="btn btn-primary" @click="capture">Capture</button>
+            <button class="btn btn-secondary" @click="addCircle">Add Circle</button>
+            <div class="shift-buttons">
+              <button class="btn btn-secondary" @click="shiftUp">Up</button>
+              <button class="btn btn-secondary" @click="shiftDown">Down</button>
+              <button class="btn btn-secondary" @click="shiftLeft">Left</button>
+              <button class="btn btn-secondary" @click="shiftRight">Right</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -24,7 +34,6 @@ export default {
 
   setup() {
     const displayContainer = ref(null)
-    const image = ref(null)
 
     onMounted(() => {
       const stage = new Konva.Stage({
@@ -34,145 +43,24 @@ export default {
       })
 
       const layer = new Konva.Layer()
+
+      const image = new Konva.Image({
+        x: 0,
+        y: 0,
+        width: 500,
+        height: 500
+      })
+
+      layer.add(image)
+
       stage.add(layer)
 
       const imageObj = new Image()
+      imageObj.src = "@/assets/slides/jonatan-pie.jpg"
       imageObj.onload = function () {
-        image.value = new Konva.Image({
-          x: 0,
-          y: 0,
-          image: imageObj,
-          width: stage.width(),
-          height: stage.height()
-        })
-        layer.add(image.value)
-        layer.draw()
+        image.image(imageObj)
+        layer.batchDraw()
       }
-      imageObj.src = require("./assets/slides/jonatan-pie.jpg")
-
-      const brightnessSlider = new Konva.Rect({
-        x: stage.width() - 20,
-        y: 10,
-        width: 10,
-        height: stage.height() - 20,
-        fill: "white",
-        stroke: "black",
-        strokeWidth: 1
-      })
-      layer.add(brightnessSlider)
-
-      const blurSlider = new Konva.Rect({
-        x: stage.width() - 10,
-        y: 10,
-        width: 10,
-        height: stage.height() - 20,
-        fill: "white",
-        stroke: "black",
-        strokeWidth: 1
-      })
-      layer.add(blurSlider)
-
-      // add controls for shifting the image
-      const shiftUpButton = new Konva.Circle({
-        x: stage.width() / 2,
-        y: 20,
-        radius: 10,
-        fill: "white",
-        stroke: "black",
-        strokeWidth: 1,
-        zIndex: 10
-      })
-      layer.add(shiftUpButton)
-
-      const shiftDownButton = new Konva.Circle({
-        x: stage.width() / 2,
-        y: stage.height() - 20,
-        radius: 10,
-        fill: "white",
-        stroke: "black",
-        strokeWidth: 1,
-        zIndex: 10
-      })
-      layer.add(shiftDownButton)
-
-      const shiftLeftButton = new Konva.Circle({
-        x: 20,
-        y: stage.height() / 2,
-        radius: 10,
-        fill: "white",
-        stroke: "black",
-        strokeWidth: 1,
-        zIndex: 10
-      })
-      layer.add(shiftLeftButton)
-
-      const shiftRightButton = new Konva.Circle({
-        x: stage.width() - 20,
-        y: stage.height() / 2,
-        radius: 10,
-        fill: "white",
-        stroke: "black",
-        strokeWidth: 1,
-        zIndex: 10
-      })
-      layer.add(shiftRightButton)
-
-      const centerButton = new Konva.Circle({
-        x: stage.width() / 2,
-        y: stage.height() / 2,
-        radius: 10,
-        fill: "white",
-        stroke: "black",
-        strokeWidth: 1,
-        zIndex: 10
-      })
-      layer.add(centerButton)
-
-      // add event listeners for shifting the image
-      shiftUpButton.on("click", function () {
-        const currentY = image.value.y()
-        image.value.y(currentY - 10)
-        layer.batchDraw()
-      })
-
-      shiftDownButton.on("click", function () {
-        const currentY = image.value.y()
-        image.value.y(currentY + 10)
-        layer.batchDraw()
-      })
-
-      shiftLeftButton.on("click", function () {
-        const currentX = image.value.x()
-        image.value.x(currentX - 10)
-        layer.batchDraw()
-      })
-
-      shiftRightButton.on("click", function () {
-        const currentX = image.value.x()
-        image.value.x(currentX + 10)
-        layer.batchDraw()
-      })
-
-      centerButton.on("click", function () {
-        image.value.x(0)
-        image.value.y(0)
-        layer.batchDraw()
-      })
-
-      // add event listeners for brightness and blur
-      brightnessSlider.on("dragmove", function () {
-        const brightness = brightnessSlider.y() / (stage.height() - 20)
-        image.value.filters([Konva.Filters.Brighten])
-        image.value.brightness(brightness)
-        layer.batchDraw()
-      })
-
-      blurSlider.on("dragmove", function () {
-        const blur = blurSlider.y() / (stage.height() - 20)
-        image.value.filters([Konva.Filters.Blur])
-        image.value.blurRadius(blur)
-        layer.batchDraw()
-      })
     })
 
     return {
