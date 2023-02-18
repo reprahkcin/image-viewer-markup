@@ -43,7 +43,8 @@ export default {
           y: 0,
           image: imageObj,
           width: stage.width(),
-          height: stage.height()
+          height: stage.height(),
+          zIndex: 1
         })
         layer.add(image.value)
         layer.draw()
@@ -79,7 +80,8 @@ export default {
         radius: 10,
         fill: "white",
         stroke: "black",
-        strokeWidth: 1
+        strokeWidth: 1,
+        zIndex: 10
       })
       layer.add(shiftUpButton)
 
@@ -89,7 +91,8 @@ export default {
         radius: 10,
         fill: "white",
         stroke: "black",
-        strokeWidth: 1
+        strokeWidth: 1,
+        zIndex: 10
       })
       layer.add(shiftDownButton)
 
@@ -99,7 +102,8 @@ export default {
         radius: 10,
         fill: "white",
         stroke: "black",
-        strokeWidth: 1
+        strokeWidth: 1,
+        zIndex: 10
       })
       layer.add(shiftLeftButton)
 
@@ -109,7 +113,8 @@ export default {
         radius: 10,
         fill: "white",
         stroke: "black",
-        strokeWidth: 1
+        strokeWidth: 1,
+        zIndex: 10
       })
       layer.add(shiftRightButton)
 
@@ -119,7 +124,8 @@ export default {
         radius: 10,
         fill: "white",
         stroke: "black",
-        strokeWidth: 1
+        strokeWidth: 1,
+        zIndex: 10
       })
       layer.add(centerButton)
 
