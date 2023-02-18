@@ -24,6 +24,7 @@ export default {
 
   setup() {
     const displayContainer = ref(null)
+    const image = ref(null)
 
     onMounted(() => {
       const stage = new Konva.Stage({
@@ -37,17 +38,17 @@ export default {
 
       const imageObj = new Image()
       imageObj.onload = function () {
-        const image = new Konva.Image({
+        image.value = new Konva.Image({
           x: 0,
           y: 0,
           image: imageObj,
           width: stage.width(),
           height: stage.height()
         })
-        layer.add(image)
+        layer.add(image.value)
         layer.draw()
       }
-      imageObj.src = "https://picsum.photos/500/500"
+      imageObj.src = "https://picsum.photos/1000/1000"
 
       const brightnessSlider = new Konva.Rect({
         x: stage.width() - 20,
@@ -124,31 +125,31 @@ export default {
 
       // add event listeners for shifting the image
       shiftUpButton.on("click", function () {
-        const currentY = image.y()
-        image.y(currentY - 10)
+        const currentY = image.value.y()
+        image.value.y(currentY - 10)
         layer.batchDraw()
       })
 
       shiftDownButton.on("click", function () {
-        const currentY = image.y()
-        image.y(currentY + 10)
+        const currentY = image.value.y()
+        image.value.y(currentY + 10)
         layer.batchDraw()
       })
 
       shiftLeftButton.on("click", function () {
-        const currentX = image.x()
-        image.x(currentX - 10)
+        const currentX = image.value.x()
+        image.value.x(currentX - 10)
         layer.batchDraw()
       })
 
       shiftRightButton.on("click", function () {
-        const currentX = image.x()
-        image.x(currentX + 10)
+        const currentX = image.value.x()
+        image.value.x(currentX + 10)
         layer.batchDraw()
       })
 
       centerButton.on("click", function () {
-        image.position({ x: stage.width() / 2, y: stage.height() / 2 })
+        image.value.position({ x: stage.width() / 2, y: stage.height() / 2 })
         layer.batchDraw()
       })
 
