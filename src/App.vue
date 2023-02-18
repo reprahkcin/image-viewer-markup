@@ -43,13 +43,12 @@ export default {
           y: 0,
           image: imageObj,
           width: stage.width(),
-          height: stage.height(),
-          zIndex: 1
+          height: stage.height()
         })
         layer.add(image.value)
         layer.draw()
       }
-      imageObj.src = "https://picsum.photos/1000/1000"
+      imageObj.src = require("./assets/slides/jonatan-pie.jpg")
 
       const brightnessSlider = new Konva.Rect({
         x: stage.width() - 20,
@@ -155,11 +154,25 @@ export default {
       })
 
       centerButton.on("click", function () {
-        image.value.position({ x: stage.width() / 2, y: stage.height() / 2 })
+        image.value.x(0)
+        image.value.y(0)
         layer.batchDraw()
       })
 
-      layer.draw()
+      // add event listeners for brightness and blur
+      brightnessSlider.on("dragmove", function () {
+        const brightness = brightnessSlider.y() / (stage.height() - 20)
+        image.value.filters([Konva.Filters.Brighten])
+        image.value.brightness(brightness)
+        layer.batchDraw()
+      })
+
+      blurSlider.on("dragmove", function () {
+        const blur = blurSlider.y() / (stage.height() - 20)
+        image.value.filters([Konva.Filters.Blur])
+        image.value.blurRadius(blur)
+        layer.batchDraw()
+      })
     })
 
     return {
